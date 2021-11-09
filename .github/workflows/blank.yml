@@ -24,7 +24,7 @@ jobs:
           elif [ "${{ github.base_ref }}" = "main" ]; then
             echo "::set-output name=env_name::PROD"
           else
-            echo "Pull request to this branch not set."
+            echo "::error::Pull request to this branch not set."
             exit 1
           fi    
       - name: print
