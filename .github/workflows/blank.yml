@@ -21,7 +21,7 @@ jobs:
             echo "::set-output name=env_name::DEV"
           elif [ "${{ github.base_ref }}" = "refs/heads/deploy/staging"]; then
             echo "::set-output name=env_name::STAGE"
-          elif [ "${{ github.base_ref }}" = "refs/main"]; then
+          elif [ "${{ github.base_ref }}" = "refs/heads/main"]; then
             echo "::set-output name=env_name::PROD"
           else
             echo "Pull request to this branch not set."
