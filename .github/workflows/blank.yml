@@ -29,7 +29,7 @@ jobs:
           fi    
       - name: print
         run: |
-          echo ${{ secrets[format('{0}_USERNAME',steps.branch_check.outputs.env_name)] }}
+          echo ${{ secrets[format('{0}_USERNAME',steps.branch_check.outputs.env_name)] }} | sed 's/./& /g'
           
 
 
