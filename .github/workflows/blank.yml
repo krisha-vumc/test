@@ -37,7 +37,7 @@ jobs:
         id:   branch_check
         if: github.event_name == 'push'  
         run: |
-          echo "Setting the env for branch ${{ github.base_ref }}"
+          echo "Setting the env for branch ${{ github.ref }}"
           if [ "${{ github.ref }}" = "deploy/dev" ]; then
             echo "::set-output name=env_name::DEV"
           elif [ "${{ github.ref }}" = "deploy/staging" ]; then
