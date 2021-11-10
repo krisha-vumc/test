@@ -13,10 +13,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-    name: Pull Request Check
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
       - name: set env for Pull Request
         id:   branch_check_PR
         if: github.event_name == 'pull_request'  
