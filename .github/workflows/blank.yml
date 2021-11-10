@@ -38,11 +38,11 @@ jobs:
         if: github.event_name == 'push'  
         run: |
           echo "Setting the env for branch ${{ github.ref }}"
-          if [ "${{ github.ref }}" = "deploy/dev" ]; then
+          if [ "${{ github.ref }}" = "refs/heads/deploy/dev" ]; then
             echo "::set-output name=env_name::DEV"
-          elif [ "${{ github.ref }}" = "deploy/staging" ]; then
+          elif [ "${{ github.ref }}" = "refs/heads/deploy/staging" ]; then
             echo "::set-output name=env_name::STAGE"
-          elif [ "${{ github.ref }}" = "main" ]; then
+          elif [ "${{ github.ref }}" = "refs/heads/main" ]; then
             echo "::set-output name=env_name::PROD"
           else
             echo "Push to this branch not set."
