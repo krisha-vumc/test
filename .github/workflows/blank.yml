@@ -1,5 +1,10 @@
 name: "Terraform Test"
 on:
+  push:
+    branches:
+      - master
+      - deploy/dev
+      - deploy/staging
   pull_request:
     branches:
       - main
@@ -37,7 +42,7 @@ jobs:
             echo "::set-output name=env_name::DEV"
           elif [ "${{ github.ref }}" = "deploy/staging" ]; then
             echo "::set-output name=env_name::STAGE"
-          elif [ "${{ github.ref }}" = "master" ]; then
+          elif [ "${{ github.ref }}" = "main" ]; then
             echo "::set-output name=env_name::PROD"
           else
             echo "Push to this branch not set."
