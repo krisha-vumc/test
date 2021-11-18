@@ -1,6 +1,6 @@
 on: 
   workflow_dispatch:
-    inputs:
+    environment:
       logLevel:
         description: 'Log level'     
         required: true
@@ -11,6 +11,15 @@ jobs:
   printInputs:
     runs-on: ubuntu-latest
     steps:
-    - run: |
+    - name: check
+      id: check_env
+      run: |
         echo "Log level: ${{ github.event.inputs.logLevel }}"
         echo "Tags: ${{ github.event.inputs.tags }}" 
+        env=$(echo ${{ github.event.inputs.environment }} | tr [a-z] [A-Z])
+        echo "::set-output name=env_name::$env"
+
+    - name: check print
+      id: check_env1
+      run: |
+        echo ${{ steps.check_env.outputs.env_name }}
