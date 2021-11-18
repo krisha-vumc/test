@@ -14,7 +14,7 @@ on:
 jobs:
   roll-back:
   runs-on: ubuntu-latest
-    name: Roll back in ${{ github.event.inputs.environment }} to ${{ github.event.inputs.tag }}
+    name: Roll back
     steps:
       - name: Checkout
         uses: actions/checkout@v2
