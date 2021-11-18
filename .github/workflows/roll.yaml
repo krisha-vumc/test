@@ -1,0 +1,39 @@
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'What is the tag you want to roll back to?'     
+        required: true
+        default: ''
+      environment:
+        description: 'Environment name:'     
+        required: true
+        default: 'DEV, PROD, STAGE'
+jobs:
+  roll-back:
+  runs-on: ubuntu-latest
+    name: Roll back in ${{ github.event.inputs.environment }} to ${{ github.event.inputs.tag }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Check the environment
+        id:   check_env 
+        run: |
+          echo "Check if env ${{ github.event.inputs.environment }} match ${{ github.event.inputs.tag }}"
+          if [[ {{ github.event.inputs.tag }} =~ ${{ github.event.inputs.environment }} ]]; then
+            echo "Correct tag associated with env is mentioned"
+          else
+            echo "Correct tag corresponding to env is not mentioned"
+            exit 1
+          fi
+      - name: Liquibase Roll Back
+        uses: liquibase/liquibase-github-action@v2
+        if: github.event_name == 'push'
+        with:
+          operation: 'update'
+          classpath: 'DDL/'
+          changeLogFile: 'main.xml'
+          username: ${{ secrets[format('{0}_USERNAME',steps.branch_check.outputs.env_name)] }}
+          password: ${{ secrets[format('{0}_PASSWORD',steps.branch_check.outputs.env_name)] }}
+          url: ${{ secrets[format('{0}_URL',steps.branch_check.outputs.env_name)] }}
