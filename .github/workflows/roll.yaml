@@ -1,15 +1,16 @@
+name: Rollback
 on:
-  push:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'What is the tag you want to roll back to?'     
+        description: 'What is the tag you want to roll back to?'
         required: true
         default: ''
       environment:
         description: 'Environment name:'     
         required: true
         default: 'DEV, PROD, STAGE'
+
 jobs:
   roll-back:
   runs-on: ubuntu-latest
