@@ -30,7 +30,7 @@ jobs:
           echo "Do something with this ${changed_file}."
           if [[ $changed_file =~ ".tf" ]]; then
             DIRchanged=`echo ${changed_file} | grep -o '^.*/'`
-            DIRchanged=`echo $DIRchanged | sed -i '1h;1!H;$!d;g;s/\(.*\)\//\1/'`
+            DIRchanged=`echo $DIRchanged | sed 's/\(.*\)\//\1/'`
             arrVar=( "${arrVar[@]}" $DIRchanged )
             echo $DIRchanged
           fi
