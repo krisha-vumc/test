@@ -20,8 +20,7 @@ jobs:
       id: check_env
       run: |
         echo "File Changed : ${{ steps.files.outputs.all }}"
-        FILE_LIST=`echo {{ steps.files.outputs.all }} | grep -o '^.*/'`
-        echo $FILE_LIST
+        echo {{ steps.files.outputs.all }} | grep -o '^.*/'
 
 
     
