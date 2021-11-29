@@ -12,22 +12,35 @@ on:
       - deploy/staging
 
 jobs:
-  terraform-plan:
+  terraform:
     runs-on: ubuntu-latest
+    outputs:
+      directory: ${{steps.check_dir.outputs.directory}}
     name: Pull Request Check
     steps:
     - name: Get list of changed files
       id: files
       uses: jitterbit/get-changed-files@v1
     - name: check
-      id: check_env
+      id: check_dir
       run: |
+        json_array() {
+          echo -n '['
+          while [ $# -gt 0 ]; do
+            x=${1//\\/\\\\}
+            echo -n \"${x//\"/\\\"}\"
+            [ $# -gt 1 ] && echo -n ', '
+            shift
+          done
+          echo ']'
+        }
         echo "File Changed : ${{ steps.files.outputs.all }}"
         declare -a arrVar
         for changed_file in ${{ steps.files.outputs.all }}; do
           echo "Do something with this ${changed_file}."
           if [[ $changed_file =~ ".tf" ]]; then
             DIRchanged=`echo ${changed_file} | grep -o '^.*/'`
+            DIRchanged=`echo $DIRchanged | sed 's/\(.*\)\//\1/'`
             arrVar=( "${arrVar[@]}" $DIRchanged )
             echo $DIRchanged
           fi
@@ -36,6 +49,20 @@ jobs:
         #echo ${arrVar[@]} | tr [:space:] '\n' | awk '!a[$0]++'
         newArray=($(printf "%s\n" "${arrVar[@]}" | sort -u))
         echo "Unique directory:"
-        echo "${newArray[@]}"
-        #echo "${newArray[@]}"
+        final=`json_array "${newArray[@]}"`
+        echo "::set-output name=directory::$final"
         
+  build:
+    runs-on: ubuntu-latest
+    needs: terraform
+    # if services is empty, the build job is skipped
+    if: "join(fromJSON(needs.terraform.outputs.directory), '') != ''"
+    strategy:
+      matrix:
+        directory: ${{ fromJSON(needs.terraform.outputs.directory) }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: test service (${{ matrix.directory }})
+        run: |
+          echo "(${{ matrix.service }})"
+          
