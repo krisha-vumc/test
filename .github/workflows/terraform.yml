@@ -37,6 +37,7 @@ jobs:
         newArray=($(printf "%s\n" "${arrVar[@]}" | sort -u))
         echo "Unique directory:"
         echo "serv=${newArray[@]}" >> $GITHUB_ENV
+        echo $env.serv
         SERVICES='${{ toJSON(env.serv) }}'
         echo $SERVICES
         
