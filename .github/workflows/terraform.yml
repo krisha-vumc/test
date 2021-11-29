@@ -38,11 +38,11 @@ jobs:
         echo "Unique directory:"
         SERVICES=`printf '%s\n' "${newArray[@]}" | jq -R . | jq -s .`
         echo $SERVICES
-        echo "::set-output name=DIRECTORY::${newArray[@]}"
+        echo "::set-output name=directory::${newArray[@]}"
         
   build:
     runs-on: ubuntu-latest
-    needs: setup
+    needs: terraform
     # if services is empty, the build job is skipped
     if: "join(fromJSON(terraform.check_dir.outputs.directory), '') != ''"
     strategy:
