@@ -24,8 +24,8 @@ jobs:
           DIR=`echo ${changed_file} | grep -o '^.*/'`
           arrVar+=($DIR)
         done
-        newArray=`sort -n $arrVar[@] | uniq`
+        newArray=( `for i in ${arrVar[@]}; do echo $i; done | sort -u` )
         matrix=`echo "${newArray[@]}" |
           jq -s '{dir: .}'`
-
+        echo $matrix
     
