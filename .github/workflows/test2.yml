@@ -25,7 +25,7 @@ jobs:
           arrVar+=($DIR)
         done
         newArray=( `for i in ${arrVar[@]}; do echo $i; done | sort -u` )
-        matrix=`echo "${newArray[@]}" |
+        echo "${newArray[@]}" |
           jq -s '{dir: .}'`
-        echo $matrix
+
     
