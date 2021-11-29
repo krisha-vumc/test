@@ -21,7 +21,7 @@ jobs:
         declare -a arrVar
         for changed_file in ${{ steps.files.outputs.all }}; do
           echo "Do something with this ${changed_file}."
-          if [[ $string =~ ".tf" ]]; then
+          if [[ $changed_file =~ ".tf" ]]; then
             DIRchanged=`echo ${changed_file} | grep -o '^.*/'`
             arrVar=( "${arrVar[@]}" $DIRchanged )
             echo $DIRchanged
