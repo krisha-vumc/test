@@ -26,8 +26,8 @@ jobs:
         done
         newArray=($(echo ${arrVar[@]} | tr [:space:] '\n' | awk '!a[$0]++'))
         #echo "${newArray[@]}"
-        list=`echo "${newArray[@]}" |
-          jq -s '{dir: .}'`
-        echo $list
+        echo "${newArray[@]}" |
+          jq -s '{dir: .}'
+        
 
     
