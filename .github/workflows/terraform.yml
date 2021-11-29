@@ -57,12 +57,12 @@ jobs:
     needs: terraform
     # if services is empty, the build job is skipped
     if: "join(fromJSON(needs.terraform.outputs.directory), '') != ''"
-    #strategy:
-    #  matrix:
-    #    directory: ${{ fromJSON(needs.terraform.outputs.directory) }}
+    strategy:
+      matrix:
+        directory: ${{ fromJSON(needs.terraform.outputs.directory) }}
     steps:
       - uses: actions/checkout@v2
-      - name: test service 
+      - name: test service (${{ matrix.directory }})
         run: |
-          echo "${{ needs.terraform.outputs.directory }}"
+          echo "(${{ matrix.service }})"
           
