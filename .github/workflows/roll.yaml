@@ -14,7 +14,7 @@ on:
 jobs:
   roll-back:
   runs-on: ubuntu-latest
-    name: Roll back
+    name: Roll_back
     steps:
       - name: Checkout
         uses: actions/checkout@v2
