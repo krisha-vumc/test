@@ -5,6 +5,12 @@ on:
       - main
       - deploy/dev
       - deploy/staging
+on:
+  push:
+    branches:
+      - main
+      - deploy/dev
+      - deploy/staging
 
 jobs:
   terraform-plan:
