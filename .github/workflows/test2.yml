@@ -14,8 +14,6 @@ jobs:
     - name: Get list of changed files
       id: files
       uses: jitterbit/get-changed-files@v1
-      with:
-        format: 'json'
     - name: check
       id: check_env
       run: |
