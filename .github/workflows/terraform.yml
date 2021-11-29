@@ -5,7 +5,6 @@ on:
       - main
       - deploy/dev
       - deploy/staging
-on:
   push:
     branches:
       - main
