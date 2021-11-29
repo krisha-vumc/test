@@ -26,6 +26,6 @@ jobs:
         done
         newArray=( `for i in ${arrVar[@]}; do echo $i; done | sort -u` )
         echo "${newArray[@]}" |
-          jq -s '{dir: .}'`
+          jq -s '{dir: .}'
 
     
