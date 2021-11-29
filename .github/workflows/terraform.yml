@@ -24,6 +24,7 @@ jobs:
           DIR=`echo ${changed_file} | grep -o '^.*/'`
           arrVar+=($DIR)
         done
+        echo ${arrVar[@]} | tr [:space:] '\n' | awk '!a[$0]++')
         newArray=($(echo ${arrVar[@]} | tr [:space:] '\n' | awk '!a[$0]++'))
         #echo "${newArray[@]}"
         echo "${newArray[@]}"
