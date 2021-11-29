@@ -1,0 +1,24 @@
+name: "Terraform Test"
+on:
+  push:
+    branches:
+      - main
+      - deploy/dev
+      - deploy/staging
+      - t3est2
+jobs:
+  terraform-plan:
+    runs-on: ubuntu-latest
+    name: Pull Request Check
+    steps:
+    - name: Get list of changed files
+      id: files
+      uses: jitterbit/get-changed-files@v1
+      with:
+        format: 'json'
+    - name: check
+      id: check_env
+      run: |
+        echo "File Changed : ${{ steps.files.outputs.all }}"
+
+    
