@@ -23,7 +23,8 @@ jobs:
           echo "Do something with this ${changed_file}."
           if [[ $string =~ ".tf" ]]; then
             DIRchanged=`echo ${changed_file} | grep -o '^.*/'`
-            arrVar=( "${arrVar[@]}" "$DIRchanged" )
+            arrVar=( "${arrVar[@]}" $DIRchanged )
+            echo $DIRchanged
           fi
 
         done
