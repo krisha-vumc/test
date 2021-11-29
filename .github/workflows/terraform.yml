@@ -27,7 +27,7 @@ jobs:
           fi
 
         done
-        echo ${arrVar[@]} | tr [:space:] '\n' | awk '!a[$0]++')
+        echo ${arrVar[@]} | tr [:space:] '\n' | awk '!a[$0]++'
         newArray=($(echo ${arrVar[@]} | tr [:space:] '\n' | awk '!a[$0]++'))
         #echo "${newArray[@]}"
         echo "${newArray[@]}"
