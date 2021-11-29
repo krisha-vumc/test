@@ -24,6 +24,16 @@ jobs:
     - name: check
       id: check_dir
       run: |
+        json_array() {
+          echo -n '['
+          while [ $# -gt 0 ]; do
+            x=${1//\\/\\\\}
+            echo -n \"${x//\"/\\\"}\"
+            [ $# -gt 1 ] && echo -n ', '
+            shift
+          done
+          echo ']'
+        }
         echo "File Changed : ${{ steps.files.outputs.all }}"
         declare -a arrVar
         for changed_file in ${{ steps.files.outputs.all }}; do
@@ -39,7 +49,7 @@ jobs:
         #echo ${arrVar[@]} | tr [:space:] '\n' | awk '!a[$0]++'
         newArray=($(printf "%s\n" "${arrVar[@]}" | sort -u))
         echo "Unique directory:"
-        final=`printf '%s\n' "${newArray[@]}" | jq -R . | jq -s .`
+        final=`json_array "${newArray[@]}"`
         echo "::set-output name=directory::$final"
         
   build:
