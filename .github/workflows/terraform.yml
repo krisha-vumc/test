@@ -36,7 +36,6 @@ jobs:
         #echo ${arrVar[@]} | tr [:space:] '\n' | awk '!a[$0]++'
         newArray=($(printf "%s\n" "${arrVar[@]}" | sort -u))
         echo "Unique directory:"
-        listdir=($(echo "${newArray[@]}" |
-          jq -s '{dir: .}'))
-        echo $listdir
+        SERVICES='${{ toJSON(${newArray[@]}) }}'
+        echo $SERVICES
         
