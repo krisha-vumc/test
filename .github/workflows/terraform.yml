@@ -15,7 +15,7 @@ jobs:
   terraform:
     runs-on: ubuntu-latest
     outputs:
-      directory: ${{ toJSON(steps.check_dir.outputs.directory) }}
+      directory: ${{steps.check_dir.outputs.directory}}
     name: Pull Request Check
     steps:
     - name: Get list of changed files
@@ -39,7 +39,8 @@ jobs:
         #echo ${arrVar[@]} | tr [:space:] '\n' | awk '!a[$0]++'
         newArray=($(printf "%s\n" "${arrVar[@]}" | sort -u))
         echo "Unique directory:"
-        echo "::set-output name=directory::$newArray"
+        final=`printf '%s\n' "${X[@]}" | jq -R . | jq -s .`
+        echo "::set-output name=directory::$final"
         
   build:
     runs-on: ubuntu-latest
