@@ -36,6 +36,7 @@ jobs:
         #echo ${arrVar[@]} | tr [:space:] '\n' | awk '!a[$0]++'
         newArray=($(printf "%s\n" "${arrVar[@]}" | sort -u))
         echo "Unique directory:"
-        SERVICES='${{ toJSON(newArray) }}'
+        echo "serv=${newArray[@]}" >> $GITHUB_ENV
+        SERVICES='${{ toJSON(env.serv) }}'
         echo $SERVICES
         
