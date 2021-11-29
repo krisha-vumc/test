@@ -20,5 +20,8 @@ jobs:
       id: check_env
       run: |
         echo "File Changed : ${{ steps.files.outputs.all }}"
+        FILE_LIST=xargs -I {} dirname {} <{{ steps.files.outputs.all }}
+        echo $FILE_LIST
+
 
     
