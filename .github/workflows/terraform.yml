@@ -38,6 +38,6 @@ jobs:
         echo "Unique directory:"
         echo "serv=${newArray[@]}" >> $GITHUB_ENV
         echo $serv
-        SERVICES='${{ toJSON(serv) }}'
+        #SERVICES='${{ toJSON(serv) }}'
         echo $SERVICES
         
