@@ -44,10 +44,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: terraform
     # if services is empty, the build job is skipped
-    if: "join(fromJSON(terraform.check_dir.outputs.directory), '') != ''"
+    if: "join(fromJSON(needs.terraform.check_dir.outputs.directory), '') != ''"
     strategy:
       matrix:
-        directory: ${{fromJSON(terraform.check_dir.outputs.directory)}}
+        directory: ${{fromJSON(needs.terraform.check_dir.outputs.directory)}}
     steps:
       - uses: actions/checkout@v2
       - name: test service (${{ matrix.directory }})
