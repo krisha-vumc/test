@@ -29,7 +29,7 @@ jobs:
 
         done
         #echo ${arrVar[@]} | tr [:space:] '\n' | awk '!a[$0]++'
-        newArray=UNIQ_IDS=($(printf "%s\n" "${arrVar[@]}" | sort -u))
+        newArray=($(printf "%s\n" "${arrVar[@]}" | sort -u))
         echo "${newArray[@]}"
         #echo "${newArray[@]}"
         
