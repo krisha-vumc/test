@@ -36,6 +36,6 @@ jobs:
         #echo ${arrVar[@]} | tr [:space:] '\n' | awk '!a[$0]++'
         newArray=($(printf "%s\n" "${arrVar[@]}" | sort -u))
         echo "Unique directory:"
-        SERVICES=`printf '%s\n' "${X[@]}" | jq -R . | jq -s .`
+        SERVICES=`printf '%s\n' "${newArray[@]}" | jq -R . | jq -s .`
         echo $SERVICES
         
