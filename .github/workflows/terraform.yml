@@ -20,7 +20,7 @@ jobs:
       id: files
       uses: jitterbit/get-changed-files@v1
     - name: check
-      id: check_env
+      id: check_dir
       run: |
         echo "File Changed : ${{ steps.files.outputs.all }}"
         declare -a arrVar
@@ -38,4 +38,19 @@ jobs:
         echo "Unique directory:"
         SERVICES=`printf '%s\n' "${newArray[@]}" | jq -R . | jq -s .`
         echo $SERVICES
+        echo "::set-output name=DIRECTORY::${newArray[@]}"
         
+  build:
+    runs-on: ubuntu-latest
+    needs: setup
+    # if services is empty, the build job is skipped
+    if: "join(fromJSON(terraform-plan.check_dir.outputs.directory), '') != ''"
+    strategy:
+      matrix:
+        directory: ${{fromJSON(terraform-plan.check_dir.outputs.directory)}}
+    steps:
+      - uses: actions/checkout@v2
+      - name: test service (${{ matrix.directory }})
+        run: |
+          echo "${{ matrix.directory}}"
+          
