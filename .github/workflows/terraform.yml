@@ -1,0 +1,41 @@
+name: "Terraform Test"
+on:
+  pull_request:
+    branches:
+      - main
+      - deploy/dev
+      - deploy/staging
+  push:
+    branches:
+      - main
+      - deploy/dev
+      - deploy/staging
+
+jobs:
+  terraform-plan:
+    runs-on: ubuntu-latest
+    name: Pull Request Check
+    steps:
+    - name: Get list of changed files
+      id: files
+      uses: jitterbit/get-changed-files@v1
+    - name: check
+      id: check_env
+      run: |
+        echo "File Changed : ${{ steps.files.outputs.all }}"
+        declare -a arrVar
+        for changed_file in ${{ steps.files.outputs.all }}; do
+          echo "Do something with this ${changed_file}."
+          if [[ $changed_file =~ ".tf" ]]; then
+            DIRchanged=`echo ${changed_file} | grep -o '^.*/'`
+            arrVar=( "${arrVar[@]}" $DIRchanged )
+            echo $DIRchanged
+          fi
+
+        done
+        #echo ${arrVar[@]} | tr [:space:] '\n' | awk '!a[$0]++'
+        newArray=($(printf "%s\n" "${arrVar[@]}" | sort -u))
+        echo "Unique directory:"
+        echo "${newArray[@]}"
+        #echo "${newArray[@]}"
+        
