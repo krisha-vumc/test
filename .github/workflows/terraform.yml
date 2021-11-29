@@ -36,6 +36,7 @@ jobs:
         #echo ${arrVar[@]} | tr [:space:] '\n' | awk '!a[$0]++'
         newArray=($(printf "%s\n" "${arrVar[@]}" | sort -u))
         echo "Unique directory:"
-        echo "${newArray[@]}"
-        #echo "${newArray[@]}"
+        listdir=`echo "${newArray[@]}" |
+          jq -s '{dir: .}'`
+        echo $listdir
         
