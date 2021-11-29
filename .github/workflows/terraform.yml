@@ -40,7 +40,7 @@ jobs:
         echo "Unique directory:"
         SERVICES=`printf '%s\n' "${newArray[@]}" | jq -R . | jq -s .`
         echo $SERVICES
-        echo "::set-output name=directory::${newArray[@]}"
+        echo "::set-output name=directory::$SERVICES"
         
   build:
     runs-on: ubuntu-latest
